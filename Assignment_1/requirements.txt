@@ -1,0 +1,6 @@
+polygon-api-client==1.4.0
+SQLAlchemy==1.4.43
+urllib3==1.26.12
+websockets==10.4
+certifi==2022.9.24
+greenlet==2.0.0.post0
