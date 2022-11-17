@@ -1,8 +1,0 @@
-#!/Users/pruthvirajpatil/Desktop/dataengg_Tandon/FA22_MG-GY_8411/Assignment_1/env/bin/python3
-# -*- coding: utf-8 -*-
-import re
-import sys
-from charset_normalizer.cli.normalizer import cli_detect
-if __name__ == '__main__':
-    sys.argv[0] = re.sub(r'(-script\.pyw|\.exe)?$', '', sys.argv[0])
-    sys.exit(cli_detect())
