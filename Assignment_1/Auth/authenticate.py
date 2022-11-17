@@ -168,7 +168,7 @@ class Authentication:
         previous_lower_bounds, previous_upper_bounds = [], []
         while count < 86400:  # 86400 seconds = 24 hours
             # Make a check to see if 6 minutes has been reached or not
-            if agg_count == 60:
+            if agg_count == 360:
                 # aggregate and get upper and lower bounds
                 lower_bounds, upper_bounds = self.aggregate_raw_data_tables()
                 # print(lower_bounds, upper_bounds)
