@@ -144,7 +144,7 @@ class Authentication:
                             fd = count/volatility
 
                     # writing data row-wise into the csv file
-                    writer.writerow([min_price,max_price,avg_price,volatility,fd])
+                    writer.writerow({"Min": min_price, "Max": max_price, "Mean": avg_price, "Vol": volatility, "FD": fd})
 
                     # for every 6 minutes, we put 100 data points with min, max, mean, vol, fd to CSV. So, we will have 99 * 100 data points after 10 hours
 
