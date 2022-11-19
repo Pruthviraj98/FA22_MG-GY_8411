@@ -87,7 +87,6 @@ class Authentication:
     def aggregate_raw_data_tables(self):
         low_bound_dictionary = collections.defaultdict(list)
         upper_bound_dictionary = collections.defaultdict(list)
-        result_dictionary = collections.defaultdict(list)
         with self.engine.begin() as conn:
             for curr in self.currency_pairs:
                 result = conn.execute(text(
@@ -111,7 +110,7 @@ class Authentication:
         return low_bound_dictionary, upper_bound_dictionary
 
 
-    def compute_fd(self, lower_bounds, upper_bounds, outputFileName):
+    def compute_fd(self, iteration, lower_bounds, upper_bounds, outputFileName):
         # print(lower_bounds, upper_bounds)
         #start the connections
         with self.engine.begin() as conn:
@@ -143,7 +142,7 @@ class Authentication:
                         fd = count/volatility
 
                 # writing data row-wise into the csv file
-                writer.writerow([key, min_price, max_price, avg_price, volatility, fd])
+                writer.writerow([iteration, key, min_price, max_price, avg_price, volatility, fd])
                 # writer.writerow({"Min": min_price, "Max": max_price, "Mean": avg_price, "Vol": volatility, "FD": fd})
 
                 # for every 6 minutes, we put 100 data points with min, max, mean, vol, fd to CSV. So, we will have 99 * 100 data points after 10 hours
@@ -165,7 +164,7 @@ class Authentication:
         while count < 86400:  # 86400 seconds = 24 hours
             # print(count, "Seconds over")
             # Make a check to see if 6 minutes has been reached or not
-            if agg_count == 30:
+            if agg_count == 360:
                 # aggregate and get upper and lower bounds
                 lower_bounds, upper_bounds = self.aggregate_raw_data_tables()
                 # print(lower_bounds, upper_bounds)
@@ -178,7 +177,7 @@ class Authentication:
                 else:
                     # from the second iteration,
                     # if count is greater than 1, then we can calculate the violations using the previously stored data points.
-                    self.compute_fd(previous_lower_bounds, previous_upper_bounds, outputFileName)
+                    self.compute_fd(iteration + 1, previous_lower_bounds, previous_upper_bounds, outputFileName)
                     previous_lower_bounds = lower_bounds
                     previous_upper_bounds = upper_bounds
                     self.reset_raw_data_tables()
