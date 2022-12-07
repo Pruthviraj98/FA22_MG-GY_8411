@@ -44,7 +44,7 @@ class Authentication:
                                ["USD", "CZK"],
                                ["USD", "PLN"],
                                ["USD", "INR"]
-                               ]
+                               ],
         self.key = "beBybSi8daPgsTp5yx5cHtHpYcrjp5Jq"
         self.engine = create_engine("sqlite+pysqlite:///sqlite/final.db", echo=False, future=True)
 
